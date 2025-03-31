@@ -18,3 +18,5 @@ my-diary
     ├── public/              # 静的なHTMLや画像など（Reactプロジェクトの公開用フォルダ）
     ├── src/                 # Reactのコンポーネントやスタイルシート等のソースコード
     └── ...                  # その他の設定ファイル（.env など、Git管理が必要なら含める）
+
+![alt text](image.png)
