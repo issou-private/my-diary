@@ -1,11 +1,27 @@
+# ─────────────────────────────────────────────────────────────
+# Stage 1: アプリケーションのビルド
+# ─────────────────────────────────────────────────────────────
 FROM maven:3.8.6-openjdk-17 AS build
 WORKDIR /app
+
+# pom.xml とソースコードをコンテナ内にコピー
 COPY pom.xml .
-COPY src ./src
+COPY src/ ./src
+
+# Maven を用いてパッケージ化（テストはスキップ）
 RUN mvn package -DskipTests
 
+# ─────────────────────────────────────────────────────────────
+# Stage 2: アプリケーションの実行環境の構築
+# ─────────────────────────────────────────────────────────────
 FROM openjdk:17-jre-slim
 WORKDIR /app
-COPY --from=build /app/target/myapp.jar app.jar
+
+# Stage 1 で作成された jar ファイルを、実行環境にコピー
+COPY --from=build /app/target/*.jar app.jar
+
+# コンテナのポート 8080 を公開（必要に応じて変更）
 EXPOSE 8080
+
+# コンテナ起動時にアプリケーションを実行
 ENTRYPOINT ["java", "-jar", "app.jar"]
