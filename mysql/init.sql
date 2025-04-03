@@ -6,7 +6,16 @@ CRATE TABLE IF NOT EXISTS user(
 id INT AUTO_INCREMENT PRIMARY KEY,
 password VARCHAR(10),
 name VARCHAR(10) NOT NULL
-join_date DATE,
+join_date DATE
 );
+
+CRATE TABLE IF NOT EXISTS diary(
+id INT AUTO_INCREMENT PRIMARY KEY,
+FOREIGN KEY (user_id) REFERENCES user(id),
+post_date DATETIME,
+comment VARCHAR(500),
+picture
+)
+
 
 
