@@ -15,7 +15,7 @@ FOREIGN KEY (user_id) REFERENCES user(id),
 post_date DATETIME,
 comment VARCHAR(500),
 picture
-)
+);
 
 
 
