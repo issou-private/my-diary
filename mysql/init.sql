@@ -1,0 +1,12 @@
+CREATE DATABASE IF NOT EXISTS my_diary;
+
+USE my_diary;
+
+CRATE TABLE IF NOT EXISTS user(
+id INT AUTO_INCREMENT PRIMARY KEY,
+password VARCHAR(10),
+name VARCHAR(10) NOT NULL
+join_date DATE,
+);
+
+
