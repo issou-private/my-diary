@@ -1,15 +1,18 @@
 # ─────────────────────────────────────────────────────────────
 # Stage 1: アプリケーションのビルド
 # ─────────────────────────────────────────────────────────────
-FROM amazoncorretto:17 AS build
+FROM maven:3.8.6-openjdk-17 AS build
 WORKDIR /app
+
+# Maven のバージョンを確認
+RUN mvn -v
 
 # pom.xml とソースコードをコンテナ内にコピー
 COPY pom.xml .
 COPY src/ ./src
 
 # Maven を用いてパッケージ化（テストはスキップ）
-RUN yum update -y && yum install -y maven && yum clean all && mvn package -DskipTests
+RUN mvn package -DskipTests
 
 # ─────────────────────────────────────────────────────────────
 # Stage 2: アプリケーションの実行環境の構築
