@@ -1,7 +1,7 @@
 # ─────────────────────────────────────────────────────────────
 # Stage 1: アプリケーションのビルド
 # ─────────────────────────────────────────────────────────────
-FROM maven:3.8.6-openjdk-17 AS build
+FROM amazoncorretto:17 AS build
 WORKDIR /app
 
 # pom.xml とソースコードをコンテナ内にコピー
@@ -9,12 +9,12 @@ COPY pom.xml .
 COPY src/ ./src
 
 # Maven を用いてパッケージ化（テストはスキップ）
-RUN mvn package -DskipTests
+RUN yum update -y && yum install -y maven && yum clean all && mvn package -DskipTests
 
 # ─────────────────────────────────────────────────────────────
 # Stage 2: アプリケーションの実行環境の構築
 # ─────────────────────────────────────────────────────────────
-FROM openjdk:17-jre-slim
+FROM amazoncorretto:17
 WORKDIR /app
 
 # Stage 1 で作成された jar ファイルを、実行環境にコピー
