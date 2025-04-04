@@ -11,7 +11,7 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: development
       # 例：Spring Boot 側で使用する接続情報
-      # SPRING_DATASOURCE_URL: jdbc:mysql://database:3306/diary?useSSL=false&serverTimezone=UTC
+      # SPRING_DATASOURCE_URL: jdbc:mysql://database:3306/dev_my_diary?useSSL=false&serverTimezone=UTC
       # SPRING_DATASOURCE_USERNAME: diaryuser
       # SPRING_DATASOURCE_PASSWORD: diarypass
     depends_on:
@@ -34,9 +34,9 @@ services:
       - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: rootpass
-      MYSQL_DATABASE: diary
-      MYSQL_USER: diaryuser
-      MYSQL_PASSWORD: diarypass
+      MYSQL_DATABASE: dev_my_diary
+      MYSQL_USER: my_diary_user
+      MYSQL_PASSWORD: Mydiary!2025
     volumes:
       - db-data:/var/lib/mysql
 
