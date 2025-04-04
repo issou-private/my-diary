@@ -16,6 +16,3 @@ post_date DATETIME,
 comment VARCHAR(500),
 picture
 );
-
-
-
