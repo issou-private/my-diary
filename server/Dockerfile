@@ -1,15 +1,14 @@
 # ─────────────────────────────────────────────────────────────
 # Stage 1: アプリケーションのビルド
 # ─────────────────────────────────────────────────────────────
-FROM maven:3.8.6-openjdk-17 AS build
+FROM maven:3.9.9-eclipse-temurin-17 AS build
 WORKDIR /app
-
-# Maven のバージョンを確認
-RUN mvn -v
 
 # pom.xml とソースコードをコンテナ内にコピー
 COPY pom.xml .
 COPY src/ ./src
+
+RUN mvn -v
 
 # Maven を用いてパッケージ化（テストはスキップ）
 RUN mvn package -DskipTests
