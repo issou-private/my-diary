@@ -6,17 +6,14 @@ import java.util.List;
 
 @Mapper
 public interface UserMapper {
+    @Select("select id, user_name, password, join_date from users order by id")
+    List<User> findAll();
+    
     @Select("SELECT * FROM users WHERE id = #{id}")
     User findById(@Param("id") Integer id);
 
-    @Select("SELECT * FROM users")
-    List<User> findAll();
-
-    @Insert("INSERT INTO users (userName, password, joinDate) VALUES (#{userName}, #{password}, #{joinDate})")
+    @Insert("INSERT INTO users (user_name, password, join_date) VALUES (#{userName}, #{password}, #{joinDate})")
     void insert(User user);
-
-    @Update("UPDATE users SET userName = #{userName}, password = #{password}, joinDate = #{joinDate} WHERE id = #{id}")
-    void update(User user);
 
     @Delete("DELETE FROM users WHERE id = #{id}")
     void delete(@Param("id") Integer id);

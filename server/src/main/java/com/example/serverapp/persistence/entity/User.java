@@ -1,8 +1,8 @@
 package com.example.serverapp.persistence.entity;
 
 import java.time.LocalDate;
-import java.util.List;
 
+@SuppressWarnings("all")
 public class User {
     private Integer id;
     private String userName;

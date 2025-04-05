@@ -10,7 +10,7 @@ public class UserResponse {
     private String password;
     private LocalDate joinDate;
 
-    public UserResponse(Integer id, String userName, String email, String password, LocalDate joinDate) {
+    public UserResponse(Integer id, String userName, String password, LocalDate joinDate) {
         this.id = id;
         this.userName = userName;
         this.password = password;
