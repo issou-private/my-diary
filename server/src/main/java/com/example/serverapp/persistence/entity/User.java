@@ -7,7 +7,7 @@ public class User {
     private Integer id;
     private String userName;
     private String password;
-    private LocalDate joinDate;
+    private LocalDate joinDate; 
 
     public Integer getId() {
         return id;
@@ -33,7 +33,7 @@ public class User {
         this.password = password;
     }
 
-    public LocalDate joinDate() {
+    public LocalDate getJoinDate() {
         return joinDate;
     }
 
