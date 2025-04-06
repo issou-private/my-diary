@@ -11,8 +11,9 @@ join_date DATE
 
 CREATE TABLE IF NOT EXISTS diaries(
 id INT AUTO_INCREMENT PRIMARY KEY,
-FOREIGN KEY (user_id) REFERENCES user(id),
+user_id INT,
 post_date DATETIME,
 comment VARCHAR(500),
-picture
+picture BLOB,
+FOREIGN KEY (user_id) REFERENCES users(id)
 );

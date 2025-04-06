@@ -17,7 +17,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.7.3</version>
+    <version>3.1.3</version>
     <relativePath/> <!-- 親 POM はリモートリポジトリから解決 -->
   </parent>
   
@@ -48,6 +48,7 @@
     <dependency>
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
+      <version>8.0.17</version>
       <scope>runtime</scope>
     </dependency>
     
