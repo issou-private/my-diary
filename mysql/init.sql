@@ -17,3 +17,7 @@ comment VARCHAR(500),
 picture BLOB,
 FOREIGN KEY (user_id) REFERENCES users(id)
 );
+
+INSERT INTO users (user_name, password, join_date) VALUES
+('JohnDoe', 'password1', '2025-04-01'),
+('JaneDoe', 'password2', '2025-04-02');
