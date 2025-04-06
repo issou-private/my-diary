@@ -7,15 +7,11 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
-    # Spring Boot から DB 接続する際は、接続先ホスト名として「database」を使用する前提です。
-    environment:
-      SPRING_PROFILES_ACTIVE: development
-      # 例：Spring Boot 側で使用する接続情報
-      # SPRING_DATASOURCE_URL: jdbc:mysql://database:3306/dev_my_diary?useSSL=false&serverTimezone=UTC
-      # SPRING_DATASOURCE_USERNAME: diaryuser
-      # SPRING_DATASOURCE_PASSWORD: diarypass
     depends_on:
-      - database
+       database:
+        condition: service_started #db起動時に、appが起動する
+    networks:
+      - my-diary-network
 
   frontend:
     build:
@@ -25,6 +21,9 @@ services:
       - "3000:80"
     depends_on:
       - backend
+    networks:
+      - my-diary-network
+
 
   database:
     build:
@@ -39,6 +38,13 @@ services:
       MYSQL_PASSWORD: Mydiary!2025
     volumes:
       - db-data:/var/lib/mysql
+    networks:
+      - my-diary-network
+
 
 volumes:
   db-data:
+
+networks:
+  my-diary-network:
+    driver: bridge
