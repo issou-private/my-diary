@@ -9,7 +9,7 @@ services:
       - "8080:8080"
     depends_on:
        database:
-        condition: service_started #db起動時に、appが起動する
+        condition: service_healthy
     networks:
       - my-diary-network
 
@@ -40,6 +40,11 @@ services:
       - db-data:/var/lib/mysql
     networks:
       - my-diary-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
 
 
 volumes:
