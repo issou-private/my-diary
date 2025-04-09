@@ -21,3 +21,6 @@ FOREIGN KEY (user_id) REFERENCES users(id)
 INSERT INTO users (user_name, password, join_date) VALUES
 ('JohnDoe', 'password1', '2025-04-01'),
 ('JaneDoe', 'password2', '2025-04-02');
+
+INSERT INTO diaries (user_id, post_date, comment) VALUES
+(1, '2025-04-05 10:00:00', 'This is a test diary entry for John Doe.');
