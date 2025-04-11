@@ -2,11 +2,16 @@ package com.example.serverapp.web.rest;
 
 import com.example.serverapp.persistence.entity.Diary;
 import com.example.serverapp.service.DiaryService;
-
+import com.example.serverapp.web.request.DiaryPostRequest;
 import com.example.serverapp.web.response.DiaryResponse;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,5 +49,19 @@ public class DiaryRestController {
                 diary.getComment()
         );
         return diaryResponse;
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<Void> insert(@RequestBody @Validated DiaryPostRequest request) {
+        Diary diary = new Diary();
+        diary.setUserId(request.getUserId());
+        diary.setPostDate(request.getPostDate());
+        diary.setComment(request.getComment());
+        diaryService.insert(diary);
+        
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+        .buildAndExpand(diary.getId())
+        .toUri();
+        return ResponseEntity.created(location).build();
     }
 }
