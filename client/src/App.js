@@ -1,6 +1,7 @@
 import React from 'react';
 
-function App() {
+const App = () => {
+  //const [isAuthenticated, setIsAuthenticated] = useState(false);
   return (
     <div>
       <h1>My Diary</h1>
