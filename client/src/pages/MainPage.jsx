@@ -1,6 +1,7 @@
 import {Link} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import DiaryList from "../components/DiaryList";
+import Header from "../components/Header";
 
 const MainPage = () => {
 
@@ -24,7 +25,7 @@ const MainPage = () => {
   ///  }, [id]);
       return (
         <div>
-          <h1>My Diary アプリ</h1>
+          <Header />
           <DiaryList />
         </div>
       );
