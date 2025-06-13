@@ -5,7 +5,7 @@ FROM node:18-alpine AS build
 WORKDIR /app
 
 # package.json と package-lock.json をコピーして依存関係をインストール
-COPY package.json package-lock.json ./
+COPY package.json ./
 RUN npm install
 
 # React のソースコードを全てコピー
