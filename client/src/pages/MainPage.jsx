@@ -22,14 +22,12 @@ const MainPage = () => {
       //  };
      //   loadUserData();
   ///  }, [id]);
-    const loadDiaryList = async () => {
       return (
         <div>
           <h1>My Diary アプリ</h1>
           <DiaryList />
         </div>
       );
-    };
 }
 
 export default MainPage;
