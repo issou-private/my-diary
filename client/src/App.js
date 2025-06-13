@@ -1,11 +1,16 @@
 import React from 'react';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import MainPage from "./pages/MainPage";
 
 const App = () => {
   //const [isAuthenticated, setIsAuthenticated] = useState(false);
   return (
-    <div>
-      <h1>My Diary</h1>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<MainPage />} />
+        {/* 他のページのルートもここに追加できます */}
+      </Routes>
+    </BrowserRouter>
   );
 }
 

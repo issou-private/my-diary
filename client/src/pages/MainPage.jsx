@@ -1,9 +1,8 @@
 import {Link} from "react-router-dom";
 import React, {useEffect, useState} from "react";
+import DiaryList from "../components/DiaryList";
 
 const MainPage = () => {
-    const [userData, setUserData] = useState('');
-    const [diaryList, setDiaryList] = useState([]);
 
 //    useEffect(() => {
  //       const loadUserData = async () => {
@@ -23,27 +22,14 @@ const MainPage = () => {
       //  };
      //   loadUserData();
   ///  }, [id]);
-
-  useEffect(() => {
     const loadDiaryList = async () => {
-        try {
-            const response = await fetch(`/diary/${id}`);
-            if (response.ok) {
-                const data = await response.json();
-                setDiaryList(data);
-            } else {
-                const data = await response.text();
-                console.error(response.status, data);
-                if (response.status === 500) {
-                    alert("サーバーが現在リクエストを処理できない状態にあります。");
-                }
-            }
-        } catch (error) {
-            console.error(error);
-        }
+      return (
+        <div>
+          <h1>My Diary アプリ</h1>
+          <DiaryList />
+        </div>
+      );
     };
-    loadDiaryList();
-}, [id]);
-
-
 }
+
+export default MainPage;
