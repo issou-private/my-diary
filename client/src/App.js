@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MainPage from "./pages/MainPage";
-import RegisterDiaryPage from './pages/RegisterDiaryPage';
+import RegisterDiaryPage from "./pages/RegisterDiaryPage";
 
 const App = () => {
   //const [isAuthenticated, setIsAuthenticated] = useState(false);
