@@ -7,7 +7,7 @@ const Header = () => {
       <nav>
         <ul>
           <li><a href="/">ホーム</a></li>
-          <li><a href="/diary">日記一覧</a></li>
+          <li><a href="/create">日記を作成</a></li>
           {/* 他のナビゲーションリンクもここに追加できます */}
         </ul>
       </nav>

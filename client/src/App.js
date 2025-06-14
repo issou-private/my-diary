@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MainPage from "./pages/MainPage";
+import RegisterDiaryPage from './pages/RegisterDiaryPage';
 
 const App = () => {
   //const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -8,6 +9,7 @@ const App = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<MainPage />} />
+        <Route path="/create" element={<RegisterDiaryPage />} />
         {/* 他のページのルートもここに追加できます */}
       </Routes>
     </BrowserRouter>
