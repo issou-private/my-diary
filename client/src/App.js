@@ -8,7 +8,8 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<RegisterDiaryPage />} />
+        <Route path="/" element={<MainPage />} />
+        <Route path="/create" element={<RegisterDiaryPage />} />
         {/* 他のページのルートもここに追加できます */}
       </Routes>
     </BrowserRouter>
