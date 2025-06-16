@@ -20,6 +20,9 @@ RUN npm run build
 FROM nginx:alpine
 COPY --from=build /app/build /usr/share/nginx/html
 
+# ここでnginx.confをNginxの設定としてコピー
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
 # ポート80（HTTP）を公開
 EXPOSE 80
 
