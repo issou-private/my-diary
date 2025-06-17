@@ -60,7 +60,7 @@ const RegisterDiary = () => {
         <label>
           日付:
           <input
-            type="date"
+            type="datetime-local"
             name="postDate"
             value={postDate}
             onChange={(e) => setPostDate(e.target.value)}
