@@ -71,13 +71,17 @@ public class ConverseService {
      * Bedrockのレスポンスからコメント部分を抽出する（簡易実装）
      */
     private String extractComment(String responseBody) {
-        // Claudeなどのモデルが返すJSON構造に応じて調整が必要
-        // ここでは仮に "content" フィールドを抽出する簡易処理
-        int start = responseBody.indexOf("\"content\":\"");
-        if (start == -1) return "コメントの抽出に失敗しました。";
-
-        start += "\"content\":\"".length();
-        int end = responseBody.indexOf("\"", start);
-        return responseBody.substring(start, end).replace("\\n", "\n");
+        try {
+            com.fasterxml.jackson.databind.JsonNode root = objectMapper.readTree(responseBody);
+            if (root.has("completion")) {
+                return root.get("completion").asText();
+            } else if (root.has("content")) {
+                return root.get("content").asText();
+            } else {
+                return "コメントの抽出に失敗しました。";
+            }
+        } catch (Exception e) {
+            return "コメントの抽出に失敗しました。";
+        }
     }
 }
