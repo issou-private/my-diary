@@ -2,6 +2,12 @@
     "configurations": [
         {
             "type": "java",
+            "name": "AwsConverseApplication",
+            "request": "launch",
+            "mainClass": "com.example.converse.AwsConverseApplication"
+        },
+        {
+            "type": "java",
             "name": "Spring Boot-ServerAppApplication<spring-boot-app>",
             "request": "launch",
             "cwd": "${workspaceFolder}",
