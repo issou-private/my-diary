@@ -50,18 +50,15 @@ public class ConverseService {
      * Bedrock Converse API用のプロンプトJSONを構築する
      */
     private String buildPrompt(String diaryText) {
-        String template = "{\n"
-         + "  \"input\": {\n"
-         + "    \"messages\": [\n"
-         + "      {\n"
-         + "        \"role\": \"user\",\n"
-         + "        \"content\": \"以下はユーザーが書いた日記です。内容に対して優しく、前向きなコメントを返してください。\\n\\n日記:\\n%s\"\n"
-         + "      }\n"
-         + "    ]\n"
-         + "  },\n"
-         + "  \"max_tokens\": 300\n"
-         + "}";
-        return String.format(template, diaryText);
+        String prompt = String.format(
+                "以下はユーザーが書いた日記です。内容に対して優しく、前向きなコメントを返してください。\n\n日記:\n%s",
+                diaryText
+        );
+        String template = "{\n" +
+                "  \"prompt\": \"%s\",\n" +
+                "  \"max_tokens_to_sample\": 300\n" +
+                "}";
+        return String.format(template, prompt.replace("\"", "\\\""));
     }
 
     /**
