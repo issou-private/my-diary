@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/converse")
+@RequestMapping("/api/okanai")
 @CrossOrigin(origins = "*") // 必要に応じてCORS設定
 public class ConverseController {
 

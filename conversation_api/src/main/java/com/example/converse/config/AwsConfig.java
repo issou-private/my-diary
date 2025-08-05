@@ -12,7 +12,7 @@ public class AwsConfig {
     @Bean
     public BedrockRuntimeClient bedrockRuntimeClient() {
         return BedrockRuntimeClient.builder()
-                .region(Region.AP_NORTHEAST_1) // 東京リージョンなど、使用するリージョンを指定
+                .region(Region.AP_NORTHEAST_1)
                 .credentialsProvider(DefaultCredentialsProvider.create())
                 .build();
     }

@@ -24,6 +24,17 @@ services:
     networks:
       - my-diary-network
 
+  conversation_api:
+    build:
+      context: ./conversation_api
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+    depends_on:
+      - database
+    networks:
+      - my-diary-network
+
 
   database:
     build:
