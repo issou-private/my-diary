@@ -2,6 +2,7 @@ package com.example.converse.service;
 
 import com.example.converse.model.MessageRequest;
 import com.example.converse.model.MessageResponse;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import software.amazon.awssdk.core.SdkBytes;
@@ -18,6 +19,8 @@ public class ConverseService {
 
     @Value("${bedrock.model.id}")
     private String modelId;
+
+    private static final ObjectMapper objectMapper = new ObjectMapper();
 
     public ConverseService(BedrockRuntimeClient bedrockClient) {
         this.bedrockClient = bedrockClient;
@@ -50,15 +53,17 @@ public class ConverseService {
      * Bedrock Converse API用のプロンプトJSONを構築する
      */
     private String buildPrompt(String diaryText) {
-        String prompt = String.format(
-                "以下はユーザーが書いた日記です。内容に対して優しく、前向きなコメントを返してください。\n\n日記:\n%s",
-                diaryText
-        );
-        String template = "{\n" +
-                "  \"prompt\": \"%s\",\n" +
-                "  \"max_tokens_to_sample\": 300\n" +
-                "}";
-        return String.format(template, prompt.replace("\"", "\\\""));
+        try {
+            var map = new java.util.HashMap<String, Object>();
+            map.put("prompt", String.format(
+                    "以下はユーザーが書いた日記です。内容に対して優しく、前向きなコメントを返してください。\n\n日記:\n%s",
+                    diaryText
+            ));
+            map.put("max_tokens_to_sample", 300);
+            return objectMapper.writeValueAsString(map);
+        } catch (Exception e) {
+            throw new RuntimeException("プロンプトJSONの生成に失敗しました", e);
+        }
     }
 
     /**
