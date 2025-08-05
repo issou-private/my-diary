@@ -54,11 +54,12 @@ public class ConverseService {
      */
     private String buildPrompt(String diaryText) {
         try {
-            var map = new java.util.HashMap<String, Object>();
-            map.put("prompt", String.format(
-                    "以下はユーザーが書いた日記です。内容に対して優しく、前向きなコメントを返してください。\n\n日記:\n%s",
-                    diaryText
-            ));
+            java.util.HashMap<String, Object> map = new java.util.HashMap<>();
+            String prompt = String.format(
+                "Human: 以下はユーザーが書いた日記です。内容に対して優しく、前向きなコメントを返してください。\n\n日記:\n%s\n\nAssistant:",
+                diaryText
+            );
+            map.put("prompt", prompt);
             map.put("max_tokens_to_sample", 300);
             return objectMapper.writeValueAsString(map);
         } catch (Exception e) {
