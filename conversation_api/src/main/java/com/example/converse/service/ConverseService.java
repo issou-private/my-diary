@@ -56,7 +56,7 @@ public class ConverseService {
         try {
             java.util.HashMap<String, Object> map = new java.util.HashMap<>();
             String prompt = String.format(
-                "Human: 以下はユーザーが書いた日記です。内容に対して優しく、前向きなコメントを返してください。\n\n日記:\n%s\n\nAssistant:",
+                "Human: 以下はユーザーが書いた日記です。あなたはちょっとおせっかいだけど人情深いオカンとして、関西弁でコメントしてください。\n\n日記:\n%s\n\nAssistant:",
                 diaryText
             );
             map.put("prompt", prompt);
