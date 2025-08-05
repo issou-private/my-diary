@@ -1,4 +1,4 @@
-package main.java.com.example.converse.service;
+package com.example.converse.service;
 
 import com.example.converse.model.MessageRequest;
 import com.example.converse.model.MessageResponse;

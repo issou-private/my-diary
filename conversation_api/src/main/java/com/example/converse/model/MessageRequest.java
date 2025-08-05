@@ -1,4 +1,4 @@
-package main.java.com.example.converse.model;
+package com.example.converse.model;
 
 public class MessageRequest {
     private String content;

@@ -1,4 +1,4 @@
-package main.java.com.example.converse.config;
+package com.example.converse.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

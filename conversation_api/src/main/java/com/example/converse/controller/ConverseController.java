@@ -1,8 +1,8 @@
-package main.java.com.example.converse.controller;
+package com.example.converse.controller;
 
-import main.java.com.example.converse.model.MessageRequest;
-import main.java.com.example.converse.model.MessageResponse;
-import main.java.com.example.converse.service.ConverseService;
+import com.example.converse.model.MessageRequest;
+import com.example.converse.model.MessageResponse;
+import com.example.converse.service.ConverseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
