@@ -2,13 +2,12 @@ package com.example.converse.model;
 
 public class MessageResponse {
     private String reply;
-
-    public MessageResponse() {}
-
+    
     public MessageResponse(String reply) {
         this.reply = reply;
     }
 
+    // Getter／Setter
     public String getReply() {
         return reply;
     }

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/okanai")
-@CrossOrigin(origins = "*") // 必要に応じてCORS設定
+@CrossOrigin(origins = "*")
 public class ConverseController {
 
     private final ConverseService converseService;
@@ -20,7 +20,10 @@ public class ConverseController {
 
     @PostMapping
     public MessageResponse converse(@RequestBody MessageRequest request) {
-        // 日記内容を受け取り、AIコメントを生成
-        return converseService.generateComment(request);
+        // 日記内容を受け取り、AIコメントを生成（String 型で返ってくる想定）
+        String comment = converseService.generateComment(request);
+
+        // MessageResponse インスタンスにラップして返却
+        return new MessageResponse(comment);
     }
 }
