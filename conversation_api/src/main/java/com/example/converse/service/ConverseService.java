@@ -1,6 +1,7 @@
 package com.example.converse.service;
 
 import com.example.converse.model.MessageRequest;
+import com.example.converse.model.MessageResponse;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,9 +32,9 @@ public class ConverseService {
      * ユーザーの日記をもとに、BedrockのConverse APIを使ってAIコメントを生成する
      *
      * @param request MessageRequest（Reactから送られる日記本文）
-     * @return AIによるコメント
+     * @return MessageResponse（AIによるコメントをreplyにセット）
      */
-    public String generateComment(MessageRequest request) {
+    public MessageResponse generateComment(MessageRequest request) {
         String diaryText = request.getContent();
         String payload = buildConversePayload(diaryText);
 
@@ -47,7 +48,8 @@ public class ConverseService {
         InvokeModelResponse response = bedrockClient.invokeModel(invokeRequest);
         String responseBody = response.body().asUtf8String();
 
-        return extractComment(responseBody);
+        String aiReply = extractComment(responseBody);
+        return new MessageResponse(aiReply);
     }
 
     /**
