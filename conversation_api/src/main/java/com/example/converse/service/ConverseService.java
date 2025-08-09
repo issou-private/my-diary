@@ -1,7 +1,7 @@
 package com.example.converse.service;
 
 import com.example.converse.model.MessageRequest;
-import com.example.converse.model.MessageResponse;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -11,6 +11,7 @@ import software.amazon.awssdk.services.bedrockruntime.model.InvokeModelRequest;
 import software.amazon.awssdk.services.bedrockruntime.model.InvokeModelResponse;
 
 import java.nio.charset.StandardCharsets;
+import java.util.*;
 
 @Service
 public class ConverseService {
@@ -34,13 +35,13 @@ public class ConverseService {
      */
     public String generateComment(MessageRequest request) {
         String diaryText = request.getContent();
-        String promptPayload = buildPrompt(diaryText);
+        String payload = buildConversePayload(diaryText);
 
         InvokeModelRequest invokeRequest = InvokeModelRequest.builder()
                 .modelId(modelId)
                 .contentType("application/json")
                 .accept("application/json")
-                .body(SdkBytes.fromString(promptPayload, StandardCharsets.UTF_8))
+                .body(SdkBytes.fromString(payload, StandardCharsets.UTF_8))
                 .build();
 
         InvokeModelResponse response = bedrockClient.invokeModel(invokeRequest);
@@ -50,33 +51,45 @@ public class ConverseService {
     }
 
     /**
-     * Bedrock Converse API用のプロンプトJSONを構築する
+     * Bedrock Converse API用のmessages形式JSONを構築する
      */
-    private String buildPrompt(String diaryText) {
+    private String buildConversePayload(String diaryText) {
         try {
-            java.util.HashMap<String, Object> map = new java.util.HashMap<>();
-            String prompt = String.format(
-                "Human: 以下はユーザーが書いた日記です。あなたはちょっとおせっかいだけど人情深いオカンとして、関西弁でコメントしてください。\n\n日記:\n%s\n\nAssistant:",
-                diaryText
-            );
-            map.put("prompt", prompt);
-            map.put("max_tokens_to_sample", 300);
+            Map<String, Object> map = new HashMap<>();
+            List<Map<String, String>> messages = new ArrayList<>();
+
+            // Claude 3系は system prompt を messages の最初に role: "system" で渡せる
+            Map<String, String> systemMsg = new HashMap<>();
+            systemMsg.put("role", "system");
+            systemMsg.put("content", "あなたはちょっとおせっかいだけど人情深いオカンです。関西弁でコメントしてください。");
+
+            Map<String, String> userMsg = new HashMap<>();
+            userMsg.put("role", "user");
+            userMsg.put("content", diaryText);
+
+            messages.add(systemMsg);
+            messages.add(userMsg);
+
+            map.put("messages", messages);
+            map.put("max_tokens", 300);
+
             return objectMapper.writeValueAsString(map);
         } catch (Exception e) {
-            throw new RuntimeException("プロンプトJSONの生成に失敗しました", e);
+            throw new RuntimeException("Converse API用JSONの生成に失敗しました", e);
         }
     }
 
     /**
-     * Bedrockのレスポンスからコメント部分を抽出する（簡易実装）
+     * Bedrockのレスポンスからコメント部分を抽出する
      */
     private String extractComment(String responseBody) {
         try {
-            com.fasterxml.jackson.databind.JsonNode root = objectMapper.readTree(responseBody);
-            if (root.has("completion")) {
-                return root.get("completion").asText();
-            } else if (root.has("content")) {
+            JsonNode root = objectMapper.readTree(responseBody);
+            // Claude 3系は "content" フィールドで返す
+            if (root.has("content")) {
                 return root.get("content").asText();
+            } else if (root.has("completion")) {
+                return root.get("completion").asText();
             } else {
                 return "コメントの抽出に失敗しました。";
             }
