@@ -58,20 +58,16 @@ public class ConverseService {
             Map<String, Object> map = new HashMap<>();
             List<Map<String, String>> messages = new ArrayList<>();
 
-            // Claude 3系は system prompt を messages の最初に role: "system" で渡せる
-            Map<String, String> systemMsg = new HashMap<>();
-            systemMsg.put("role", "system");
-            systemMsg.put("content", "あなたはちょっとおせっかいだけど人情深いオカンです。関西弁でコメントしてください。");
-
+            // system promptはuserメッセージに含める
             Map<String, String> userMsg = new HashMap<>();
             userMsg.put("role", "user");
-            userMsg.put("content", diaryText);
+            userMsg.put("content", "あなたはちょっとおせっかいだけど人情深いオカンです。関西弁でコメントしてください。\n\n日記:\n" + diaryText);
 
-            messages.add(systemMsg);
             messages.add(userMsg);
 
             map.put("messages", messages);
             map.put("max_tokens", 300);
+            map.put("anthropic_version", "bedrock-2023-05-31");
 
             return objectMapper.writeValueAsString(map);
         } catch (Exception e) {
