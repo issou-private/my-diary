@@ -48,8 +48,8 @@ public class ConverseService {
         InvokeModelResponse response = bedrockClient.invokeModel(invokeRequest);
         String responseBody = response.body().asUtf8String();
 
-        String aiReply = extractComment(responseBody);
-        return new MessageResponse(aiReply);
+        String reply = extractComment(responseBody);
+        return new MessageResponse(reply);
     }
 
     /**
