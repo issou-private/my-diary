@@ -20,10 +20,10 @@ public class ConverseController {
 
     @PostMapping
     public MessageResponse converse(@RequestBody MessageRequest request) {
-        // 日記内容を受け取り、AIコメントを生成（String 型で返ってくる想定）
-        String comment = converseService.generateComment(request);
+        // 日記内容を受け取り、AIコメントを生成（MessageResponse 型で返ってくる想定）
+        MessageResponse response = converseService.generateComment(request);
 
-        // MessageResponse インスタンスにラップして返却
-        return new MessageResponse(comment);
+        // MessageResponse インスタンスをそのまま返却
+        return response;
     }
 }
