@@ -85,14 +85,19 @@ public class ConverseService {
     private String extractComment(String responseBody) {
         try {
             JsonNode root = objectMapper.readTree(responseBody);
-            // Claude 3系は "content" フィールドで返す
+            // Claude 3.5のレスポンスは content フィールドがトップレベルに存在する
             if (root.has("content")) {
                 return root.get("content").asText();
-            } else if (root.has("completion")) {
-                return root.get("completion").asText();
-            } else {
-                return "コメントの抽出に失敗しました。";
             }
+            // 念のため、contentが配列の場合も対応
+            if (root.has("content") && root.get("content").isArray() && root.get("content").size() > 0) {
+                return root.get("content").get(0).asText();
+            }
+            // 他のパターン
+            if (root.has("completion")) {
+                return root.get("completion").asText();
+            }
+            return "コメントの抽出に失敗しました。";
         } catch (Exception e) {
             return "コメントの抽出に失敗しました。";
         }
