@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { sendCommentToOkanAI } from './OkanAI'; // 追加
 
 const RegisterDiary = () => {
   const [userId, setUserId] = useState('');
   const [postDate, setPostDate] = useState('');
   const [comment, setComment] = useState('');
   const [loading, setLoading] = useState(false);
+  const [okanaiResponse, setOkanaiResponse] = useState(''); // 追加
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -17,6 +19,16 @@ const RegisterDiary = () => {
     };
 
     try {
+      // OkanAI APIへコメント送信
+      const okanaiRes = await sendCommentToOkanAI(comment);
+      if (okanaiRes.ok) {
+        const okanaiData = await okanaiRes.json();
+        setOkanaiResponse(okanaiData.message || 'OkanAIからの応答: 受信しました');
+      } else {
+        setOkanaiResponse('OkanAI APIへの送信に失敗しました');
+      }
+
+      // 日記登録APIへ送信
       const response = await fetch('http://localhost:8080/diary/register', {
         method: 'POST',
         headers: {
@@ -82,6 +94,11 @@ const RegisterDiary = () => {
           {loading ? "送信中..." : "日記を作成"}
         </button>
       </form>
+      {okanaiResponse && (
+        <div style={{ marginTop: '1em', color: 'green' }}>
+          {okanaiResponse}
+        </div>
+      )}
     </div>
   );
 };

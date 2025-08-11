@@ -1,11 +1,21 @@
-import React from 'react';
+export async function sendCommentToOkanAI(comment) {
+  try {
+    const response = await fetch('http://localhost:8081/api/okanai', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ content: comment }) // commentをcontentフィールドとして送信
+    });
 
-const OkanAI = () =>{
-    return(
-        <div>
-            <h2>OkanAI</h2>
-            <p>OkanAIは、あなたの感情を理解し、日記の内容を分析するAIです。</p>
-            <p>日記を登録して、OkanAIに感情分析を依頼しましょう！</p>
-        </div>
-    );
+    if (!response.ok) {
+      throw new Error('OkanAI APIへの送信に失敗しました');
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('OkanAI API送信エラー:', error);
+    throw error;
+  }
 }
