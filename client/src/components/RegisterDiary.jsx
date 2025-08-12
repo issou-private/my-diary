@@ -21,13 +21,12 @@ const RegisterDiary = () => {
     try {
       // OkanAI APIへコメント送信
       const okanaiRes = await sendCommentToOkanAI(comment);
-      if (okanaiRes.ok) {
-        const okanaiData = await okanaiRes.json();
-        setOkanaiResponse(okanaiData.message || 'OkanAIからの応答: 受信しました');
-      } else {
-        setOkanaiResponse('OkanAI APIへの送信に失敗しました');
-      }
+      setOkanaiResponse(okanaiRes.reply || 'OkanAIからの応答: 受信しました');
+    } catch (error) {
+      setOkanaiResponse('OkanAI APIへの送信に失敗しました');
+    }
 
+    try {
       // 日記登録APIへ送信
       const response = await fetch('http://localhost:8080/diary/register', {
         method: 'POST',
