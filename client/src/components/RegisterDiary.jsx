@@ -39,9 +39,6 @@ const RegisterDiary = () => {
 
       if (response.ok) {
         alert('日記が作成されました！');
-        setUserId('');
-        setPostDate('');
-        setComment('');
       } else {
         const errorText = await response.text();
         alert(`日記の作成に失敗しました: ${errorText}`);
