@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
+import { useActionState } from "react";
 import { sendCommentToOkanAI } from './OkanAI'; // 追加
 
 const RegisterDiary = () => {
   const [userId, setUserId] = useState('');
   const [postDate, setPostDate] = useState('');
-  const [comment, setComment] = useState('');
+  const [comment, setComment] = useActionState('');
   const [loading, setLoading] = useState(false);
   const [okanaiResponse, setOkanaiResponse] = useState(''); // 追加
 
