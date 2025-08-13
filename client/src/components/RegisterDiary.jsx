@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useActionState } from "react";
+import { useActionState } from 'react';
 import { sendCommentToOkanAI } from './OkanAI'; // 追加
 
 const RegisterDiary = () => {
