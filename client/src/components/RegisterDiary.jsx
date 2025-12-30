@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { sendCommentToOkanAI } from './OkanAI'; // 追加
 
 const RegisterDiary = () => {
@@ -7,6 +7,11 @@ const RegisterDiary = () => {
   const [comment, setComment] = useState('');
   const [loading, setLoading] = useState(false);
   const [okanaiResponse, setOkanaiResponse] = useState(''); // 追加
+
+    // ✅ 再マウント検出
+  useEffect(() => {
+    console.log('🆕 RegisterDiary マウントされました');
+  }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
